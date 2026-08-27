@@ -19,8 +19,6 @@ A Kaggle notebook pipeline for tracking cells through anisotropic 3D microscopy 
 5. Enforce one incoming edge per node and at most two outgoing edges for cell division.
 6. Write and structurally validate the final submission artifact.
 
-The pretrained graph source is the public Kaggle notebook `pilkwang/biohub-cell-tracking-learned-graph-w-gap-recovery`. The adaptive calibration and validation code in this repository is separate project work.
-
 ## Validation
 
 The selected 6 micrometer limit produced the following visible-label proxy results:
