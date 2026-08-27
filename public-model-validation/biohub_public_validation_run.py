@@ -1,5 +1,3 @@
-"""Validate the strongest public BioHub learned-model notebook on visible labels."""
-
 import json
 import subprocess
 import sys
