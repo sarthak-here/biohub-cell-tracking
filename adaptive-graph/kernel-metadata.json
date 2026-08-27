@@ -1,0 +1,16 @@
+{
+  "id": "sarthaksharma14/biohub-adaptive-graph-calibration",
+  "title": "BioHub Adaptive Graph Calibration",
+  "code_file": "biohub_adaptive_graph_final.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["biohub-cell-tracking-during-development"],
+  "kernel_sources": ["pilkwang/biohub-cell-tracking-learned-graph-w-gap-recovery"],
+  "model_sources": []
+}

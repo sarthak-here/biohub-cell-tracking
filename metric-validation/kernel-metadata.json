@@ -1,0 +1,16 @@
+{
+  "id": "sarthaksharma14/biohub-visible-metric-validation",
+  "title": "BioHub Visible Metric Validation",
+  "code_file": "biohub_metric_validation.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["biohub-cell-tracking-during-development"],
+  "kernel_sources": ["sarthaksharma14/biohub-anisotropic-tracking-baseline"],
+  "model_sources": []
+}

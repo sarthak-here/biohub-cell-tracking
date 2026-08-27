@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+kaggle-output/
+kaggle-output-v2/
+*-output/
+submission.csv
+*.log

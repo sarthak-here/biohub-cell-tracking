@@ -1,0 +1,16 @@
+{
+  "id": "sarthaksharma14/biohub-public-learned-model-validation",
+  "title": "BioHub Public Learned Model Validation",
+  "code_file": "biohub_public_validation_run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["biohub-cell-tracking-during-development"],
+  "kernel_sources": ["pilkwang/biohub-cell-tracking-learned-graph-w-gap-recovery"],
+  "model_sources": []
+}

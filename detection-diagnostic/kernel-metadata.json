@@ -1,0 +1,16 @@
+{
+  "id": "sarthaksharma14/biohub-detection-diagnostic",
+  "title": "BioHub Detection Diagnostic",
+  "code_file": "biohub_detection_diagnostic.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["biohub-cell-tracking-during-development"],
+  "kernel_sources": [],
+  "model_sources": []
+}
