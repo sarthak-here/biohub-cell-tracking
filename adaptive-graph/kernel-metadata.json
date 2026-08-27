@@ -1,6 +1,6 @@
 {
-  "id": "sarthaksharma14/biohub-adaptive-graph-calibration",
-  "title": "BioHub Adaptive Graph Calibration",
+  "id": "sarthaksharma14/biohub-standalone-physical-tracker",
+  "title": "BioHub Standalone Physical Tracker",
   "code_file": "biohub_adaptive_graph_final.py",
   "language": "python",
   "kernel_type": "script",
@@ -11,6 +11,6 @@
   "machine_shape": "",
   "dataset_sources": [],
   "competition_sources": ["biohub-cell-tracking-during-development"],
-  "kernel_sources": ["pilkwang/biohub-cell-tracking-learned-graph-w-gap-recovery"],
+  "kernel_sources": [],
   "model_sources": []
 }

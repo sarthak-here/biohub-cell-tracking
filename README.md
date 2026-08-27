@@ -1,62 +1,79 @@
 # BioHub Cell Tracking
 
-A Kaggle notebook pipeline for tracking cells through anisotropic 3D microscopy time series. The current candidate uses a public learned tracker as its pretrained graph source, then applies dataset-specific physical graph calibration and strict topology validation.
+A standalone Kaggle pipeline for detecting and tracking cells in anisotropic
+3D microscopy time series. The notebook reads the competition test volumes at
+runtime, so it works with both the visible examples and Kaggle's hidden test
+set.
 
 ## Current status
 
-- Kaggle notebook: `sarthaksharma14/biohub-adaptive-graph-calibration`
-- Notebook status: complete
-- Competition submission: not submitted yet
-- Data runs entirely through Kaggle-mounted competition data
-- Local dataset download is not required
+- Kaggle notebook: sarthaksharma14/biohub-standalone-physical-tracker
+- Internet access: disabled
+- External notebook outputs: none
+- External model weights: none
+- Competition submission: gated on output validation and explicit approval
 
 ## Method
 
-1. Load the output graph from the public learned BioHub tracker notebook.
-2. Match predictions to visible training tracks within the official 7 micrometer node radius.
-3. Evaluate candidate edge limits from 6 to 14 micrometers for each movie.
-4. Keep only consecutive-frame links.
-5. Enforce one incoming edge per node and at most two outgoing edges for cell division.
-6. Write and structurally validate the final submission artifact.
+1. Read each Zarr v3 timepoint directly from mounted competition data.
+2. Preserve full Z resolution and downsample X/Y by four to make physical
+   voxel spacing approximately isotropic.
+3. Normalize each frame with robust intensity percentiles.
+4. Detect cell centres with a two-scale Difference-of-Gaussians response.
+5. Refine every centre using a local intensity-weighted centroid.
+6. Match adjacent frames with Hungarian assignment in physical micrometres.
+7. Reject links longer than 8.4 micrometres.
+8. Remove isolated detections and serialize each dataset as a node block
+   followed by its edge block.
 
-## Validation
+The baseline intentionally does not invent divisions or temporal gaps. Those
+events are rare in the training annotations, and false division edges have a
+large precision cost.
 
-The selected 6 micrometer limit produced the following visible-label proxy results:
+## Submission guarantees
 
-| Dataset | Node recall | Edge Jaccard |
-| --- | ---: | ---: |
-| 44b6_0113de3b | 1.000 | 0.980 |
-| 44b6_0b24845f | 1.000 | 0.918 |
-| 6bba_05b6850b | 0.997 | 0.985 |
-| 6bba_05db0fb1 | 0.997 | 0.934 |
-| Aggregate | 0.998 mean | 0.955 |
+Before a dataset is written, the notebook verifies:
 
-This is a local proxy calculated from visible labels, not a Kaggle leaderboard score.
+- positive contiguous node IDs;
+- integer T/Z/Y/X coordinates inside the actual image shape;
+- unique node IDs and edges;
+- no dangling endpoints;
+- links only between consecutive frames;
+- at most one parent and one child per node;
+- exact competition columns and dataset-block ordering;
+- a consecutive global id column.
 
-Final artifact checks:
+The CSV is streamed one dataset at a time to keep memory usage bounded when
+Kaggle swaps in the much larger hidden test set.
 
-- 4 test datasets
-- 136,809 nodes
-- 130,263 edges
-- 0 duplicate nodes
-- 0 dangling or non-consecutive edges
-- Maximum in-degree: 1
-- Maximum out-degree: 2
-- Maximum edge length: 5.998 micrometers
+## Visible validation
+
+The completed Kaggle notebook produced 251,289 rows across all four visible
+test movies in 81 seconds. Full artifact validation found:
+
+- 129,502 node rows and 121,787 edge rows;
+- zero nulls, duplicate IDs, dangling edges, or invalid coordinates;
+- exact sample-compatible dataset and node/edge block ordering;
+- visible adjusted edge Jaccard proxy: 0.7331;
+- visible mean sparse-node recall: 0.8774.
+
+The proxy uses the visible movies that also have matching training graphs. It
+is not a private leaderboard score and is used only to compare notebook
+variants before submission.
 
 ## Project files
 
-- `adaptive-graph/biohub_adaptive_graph_final.py`: final Kaggle candidate
-- `adaptive-graph/kernel-metadata.json`: private Kaggle notebook configuration
-- `biohub_baseline.py`: lightweight local-maxima baseline
-- `detection-diagnostic/`: bright/dark peak experiments
-- `metric-validation/`: visible-label metric prototype
+- adaptive-graph/biohub_adaptive_graph_final.py: standalone Kaggle inference
+  and submission pipeline
+- adaptive-graph/kernel-metadata.json: private Kaggle notebook configuration
+- biohub_baseline.py: original lightweight baseline
+- detection-diagnostic/: detection experiments
+- metric-validation/: metric validation experiments
 
 ## Run on Kaggle
 
-```powershell
-kaggle kernels push -p .\adaptive-graph
-kaggle kernels status sarthaksharma14/biohub-adaptive-graph-calibration
-```
+    kaggle kernels push -p .\adaptive-graph
+    kaggle kernels status sarthaksharma14/biohub-standalone-physical-tracker
 
-The final competition submission is intentionally gated on explicit approval after validation.
+After completion, download and validate the artifacts before creating a
+competition submission.

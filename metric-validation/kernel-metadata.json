@@ -11,6 +11,6 @@
   "machine_shape": "",
   "dataset_sources": [],
   "competition_sources": ["biohub-cell-tracking-during-development"],
-  "kernel_sources": ["sarthaksharma14/biohub-anisotropic-tracking-baseline"],
+  "kernel_sources": ["sarthaksharma14/biohub-standalone-physical-tracker"],
   "model_sources": []
 }
