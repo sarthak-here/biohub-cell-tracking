@@ -11,5 +11,6 @@
   "machine_shape": "",
   "dataset_sources": [],
   "competition_sources": ["biohub-cell-tracking-during-development"],
+  "kernel_sources": ["pilkwang/biohub-cell-tracking-learned-graph-w-gap-recovery"],
   "model_sources": []
 }
